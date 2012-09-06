@@ -19,7 +19,6 @@
 	}
 
 	$new_url = $new_domain . $new_path;
-	//echo $new_url;
 	
 	// retrieve all sites
 	$sql		= "SELECT blog_id,domain,path FROM " . $table_prefix . "blogs";
@@ -109,65 +108,9 @@
 			'new_url' => substr_replace($new_url,"",-1)		
 		));
 		
-		// Update [cur_prefix]_posts with new url
-		/* $sql = "UPDATE " . $cur_prefix . "posts SET guid = replace(guid,:old_url,:new_url)";
-		$stmt = $db->prepare($sql);
-		$stmt->execute(array(
-			'old_url' => $old_domain . $site['path'],
-			'new_url' => substr_replace($new_url,"",-1) . $site['path']		
-		)); */
-		
-		/* $sql = "UPDATE " . $cur_prefix . "posts SET guid = replace(guid,:old_url,:new_url) WHERE blog_id = :blog_id";
-		$stmt = $db->prepare($sql);
-		$stmt->execute(array(
-			'blog_id' => $site['blog_id'],
-			'old_url' => 'moveit' . substr($site['path'],1) . substr($new_path,1) . substr($site['path'],1) . substr($new_path,1) . substr($site['path'],1),
-			'new_url' => substr_replace($new_url,"",-1) . $site['path']		
-		)); 
-		
-		echo $sql . "<br>";
-		echo 'moveit' . substr($site['path'],1) . substr($new_path,1) . substr($site['path'],1) . substr($new_path,1) . substr($site['path'],1) . "<br>"; */
 	}
 
 
 
-exit;
-
-/* $sql = "UPDATE hpu_site SET domain = replace(domain,$moving_from,$moving_to);";
-$db->query($sql);
-
-
-$sql = "UPDATE hpu_3_options SET option_value = replace(option_value,'" . $moving_from . "','" . $moving_to . "')";
-$db->query($sql);  */
-
-$sql = "UPDATE hpu_3_postmeta SET meta_value = replace(meta_value,'" . $moving_from . "','" . $moving_to . "')";
-$db->query($sql);
-
-$sql = "UPDATE hpu_3_posts SET guid = replace(guid,'http://" . $moving_from . "','http://" . $moving_to ."')";
-$db->query($sql);
-
-$sql = "UPDATE hpu_3_posts SET post_content = replace(post_content,'http://" . $moving_from . "','http://" . $moving_to ."')";
-$db->query($sql);
-
-$sql = "UPDATE hpu_3_comments SET comment_author_url = replace(comment_author_url,'http://" . $moving_from . "','http://" . $moving_to ."')";
-$db->query($sql);
-
-/*
-
-$sql = "UPDATE hpu_site SET domain = replace(domain,$moving_from,$moving_to);";
-$db->query($sql);
-// Update options table
-$sql = "UPDATE hpu_blogs SET domain = replace(domain,$moving_from,$moving_to);";
-$db->query($sql);
-$sql = "UPDATE hpu_2_options SET option_value = replace(option_value,'http://' . $moving_from,'http://' . $moving_to);";
-$db->query($sql);
-// Update posts table
-$sql = "UPDATE hpu_2_posts SET guid = replace(guid,'http://' . $moving_from,'http://' . $moving_to);";
-$db->query($sql);
-$sql = "UPDATE hpu_2_posts SET post_content = replace(post_content,'http://' . $moving_from,'http://' . $moving_to);";
-$db->query($sql);
-
-*/
-// convert back to oldenburg
 
 ?>
