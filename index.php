@@ -1,5 +1,12 @@
 <?php 
 
+	/*
+	create a new file called host.php
+	include the following variables:
+	
+	
+	*/
+
 	require_once('host.php');
 	
 	$db = new PDO("mysql:host=$host;dbname=$db_name", $db_user, $db_pass);  
@@ -88,6 +95,20 @@
 			'new_url' => substr_replace($new_url,"",-1)		
 		));
 		
+		$sql = "UPDATE " . $cur_prefix . "posts SET post_content = replace(post_content,:old_url,:new_url)";
+		$stmt = $db->prepare($sql);
+		$stmt->execute(array(
+			'old_url' => $old_domain . substr_replace($old_path,"",-1),
+			'new_url' => substr_replace($new_url,"",-1)		
+		));
+		
+		$sql = "UPDATE " . $cur_prefix . "posts SET guid = replace(guid,:old_url,:new_url)";
+		$stmt = $db->prepare($sql);
+		$stmt->execute(array(
+			'old_url' => $old_domain . substr_replace($old_path,"",-1),
+			'new_url' => substr_replace($new_url,"",-1)		
+		));
+		
 		// Update [cur_prefix]_posts with new url
 		/* $sql = "UPDATE " . $cur_prefix . "posts SET guid = replace(guid,:old_url,:new_url)";
 		$stmt = $db->prepare($sql);
@@ -96,15 +117,16 @@
 			'new_url' => substr_replace($new_url,"",-1) . $site['path']		
 		)); */
 		
-		$sql = "UPDATE " . $cur_prefix . "posts SET guid = replace(guid,:old_url,:new_url)";
+		/* $sql = "UPDATE " . $cur_prefix . "posts SET guid = replace(guid,:old_url,:new_url) WHERE blog_id = :blog_id";
 		$stmt = $db->prepare($sql);
 		$stmt->execute(array(
-			'old_url' => $old_domain . $site['path'],
+			'blog_id' => $site['blog_id'],
+			'old_url' => 'moveit' . substr($site['path'],1) . substr($new_path,1) . substr($site['path'],1) . substr($new_path,1) . substr($site['path'],1),
 			'new_url' => substr_replace($new_url,"",-1) . $site['path']		
-		));
+		)); 
 		
 		echo $sql . "<br>";
-		//echo $old_domain . $site['path'] . "<br>";
+		echo 'moveit' . substr($site['path'],1) . substr($new_path,1) . substr($site['path'],1) . substr($new_path,1) . substr($site['path'],1) . "<br>"; */
 	}
 
 
